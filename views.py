@@ -1,3 +1,8 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+
 def plot_heatmap(df,total_rows,figure_output_file):
     fontsize=18
     rc={'font.size': fontsize, 'axes.labelsize': fontsize, 'legend.fontsize': fontsize,
