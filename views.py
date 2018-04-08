@@ -43,3 +43,20 @@ def plot_pie(df,output_file=""):
         plt.savefig(output_file+".png")
     else:
         plt.show()
+        
+        
+def plot_stack_hist(df,output_file=""):
+    """
+    df must contain dataframe with the following characteristics:
+    - Indexes must be dates
+    - Each column is a dataset with integers
+    - The values must be mutually exclusive (adding them must give the total)
+    - The column name is the label
+    - The column named "target" will be plottet as a line if it exist
+    output_file will provide name of the png with the graph
+    output_file will show graph if not specified
+    """
+    assert(isinstance(df,pd.core.frame.DataFrame))
+    assert(isinstance(output_file,str))
+    df.plot.bar(stacked=True)
+    plt.show()
