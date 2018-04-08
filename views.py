@@ -19,3 +19,27 @@ def plot_heatmap(df,total_rows,figure_output_file):
     ax.xaxis.set_label_position('top')
     plt.savefig(figure_output_file)
     #plt.show()
+
+def plot_pie(df,output_file=""):
+    """
+    plot_pie takes a pandas data series and turns it into a pie chart
+    - if the dataseries have a column header, this will become the graph title
+    - if output_file is specificed, chart is written to a png file
+    """
+    #check input
+    assert(isinstance(df,pd.core.series.Series))
+    assert(isinstance(output_file,str))
+
+    #configure plot
+    df.plot.pie(autopct='%.1f%%', pctdistance=0.75)
+    plt.xlabel('')
+    plt.ylabel('')
+    plt.title(df.name)
+    plt.axis('equal')
+    plt.legend(loc='best')
+
+    #deliver plot
+    if output_file:
+        plt.savefig(output_file+".png")
+    else:
+        plt.show()
