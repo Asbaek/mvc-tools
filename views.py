@@ -60,3 +60,61 @@ def plot_stack_hist(df,output_file=""):
     assert(isinstance(output_file,str))
     df.plot.bar(stacked=True)
     plt.show()
+    
+    
+# Data
+df = pd.DataFrame({
+'col0': ['title1','title2','title3'],
+'col1': [1,2,4],
+'col2': [2,3,1],
+})
+df = df.set_index('col0')
+
+
+#Views
+def polar_plot(df,title):
+    """Plots spiderweb or radar plot, based on dataframe
+       Dataframe must contain the following:
+        col0    col1    col2    col3    col4
+        title1  x11     x12     x13     x14
+        title2  x21     x22     x23     x24
+        ...
+        each var, will be a corner in the web
+        each category, will be set of similar colored dots inside the web.
+    """
+
+    # Create coordinate system
+    N=len(df)
+    ticks = [n/float(N)*2*pi for n in range(N)]
+    ticks = np.append(ticks,ticks[0]) #complete the circle
+    ax = plt.subplot(111,polar=True)
+    ax.set_theta_offset(pi/2)
+    ax.set_theta_direction(-1)
+    plt.xticks(ticks,list(df.index.values))
+    ax.set_rlabel_position(0)
+    plt.yticks([1,2,3,4,5], ["1","2","3","4","5"], color="grey", size=7)
+    plt.ylim(0,5)
+    for column in list(df):
+        values = df[column].values
+        values = np.append(values,values[0]) #complete the circle
+        ax.plot(ticks,values,linewidth=1, linestyle='solid',label=column)
+        ax.fill(ticks,values,alpha = 0.25)
+    plt.legend(loc='upper right', bbox_to_anchor=(0.1, 0.1))
+    plt.title(title,fontdict={'fontsize':24})
+    plt.show()
+
+
+def stacked_bars(df,title):
+    """ plots stacked bar chart based on dataframe.
+        Dataframe must contain the following
+        col0    col1    col2    col3    col4
+        title1  x11     x12     x13     x14
+        title2  x21     x22     x23     x24
+        ...
+        each var, will be a column in the bar plot
+        each bar, will contain the categories stacked 
+    """
+    df.plot.bar(stacked=True)
+    plt.title(title,fontdict={'fontsize':24})
+    plt.show()
+
